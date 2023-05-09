@@ -1,0 +1,62 @@
+1. DATATABLES
+  a. Masukan perintah dibawah ini pada terminal
+
+    composer require yajra/laravel-datatables-oracle:~9.0
+
+  b. Setelah instalasi selesai, buka file config/app.php, dan tambahkan Yajra\DataTables\DataTablesServiceProvider::class ke dalam array providers:
+    'providers' => [
+      // ...
+      Yajra\DataTables\DataTablesServiceProvider::class,
+     ],
+     
+   c. Selanjutnya, tambahkan juga alias untuk DataTables dengan menambahkan kode berikut ke dalam array aliases di file config/app.php:
+      'aliases' => [
+        // ...
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+      ],
+      
+2. Json Web Token
+a. Install library JWT melalui composer dengan menjalankan perintah berikut di terminal:
+    composer require tymon/jwt-auth
+b. Setelah selesai, buka file config/app.php dan tambahkan providers dan aliases berikut di bagian akhir file:
+    'providers' => [
+      // ...
+      Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+    ],
+
+    'aliases' => [
+     // ...
+      'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+      'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+    ],
+    
+ c. Selanjutnya, jalankan perintah php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider" untuk membuat file konfigurasi JWT.
+
+ d. Kemudian, jalankan perintah php artisan jwt:secret untuk menghasilkan JWT secret key. Key ini digunakan untuk membuat token yang aman.
+
+ e. Setelah itu, Anda perlu menambahkan middleware JWTAuth di dalam file app/Http/Kernel.php. Tambahkan kode berikut pada array $routeMiddleware:
+    'jwt.auth' => \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
+    'jwt.refresh' => \Tymon\JWTAuth\Http\Middleware\RefreshToken::class,
+ f. Selanjutnya, Anda perlu menambahkan autentikasi JWT pada model user. Buka model user, dan tambahkan use Tymon\JWTAuth\Contracts\JWTSubject; di bagian atas file. Kemudian, implementasikan JWTSubject interface pada model dan tambahkan method getJWTIdentifier() dan getJWTCustomClaims().
+    
+    use Illuminate\Foundation\Auth\User as Authenticatable;
+    use Tymon\JWTAuth\Contracts\JWTSubject;
+
+    class User extends Authenticatable implements JWTSubject
+    {
+      // ...
+    
+      public function getJWTIdentifier()
+      {
+        return $this->getKey();
+      }
+
+      public function getJWTCustomClaims()
+      {
+        return [];
+      }
+  }
+
+
+
+
