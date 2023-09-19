@@ -1,7 +1,7 @@
 1. DATATABLES
   a. Masukan perintah dibawah ini pada terminal
 
-    composer require yajra/laravel-datatables-oracle:~9.0
+    composer require yajra/laravel-datatables-oracle:~10.0
 
   b. Setelah instalasi selesai, buka file config/app.php, dan tambahkan Yajra\DataTables\DataTablesServiceProvider::class ke dalam array providers:
     'providers' => [
