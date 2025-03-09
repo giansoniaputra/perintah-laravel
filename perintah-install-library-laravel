@@ -14,8 +14,9 @@
         // ...
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
       ],
-      
-2. Json Web Token
+2. FPDF
+    composer require codedge/laravel-fpdf
+3. Json Web Token
 a. Install library JWT melalui composer dengan menjalankan perintah berikut di terminal:
     composer require tymon/jwt-auth
 b. Setelah selesai, buka file config/app.php dan tambahkan providers dan aliases berikut di bagian akhir file:
